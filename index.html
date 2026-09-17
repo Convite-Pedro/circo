@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#172c43">
+  <meta name="description" content="Convite digital de aniversário: O Grande Circo do Pedro, 18 de outubro, 16h, Karamelada Park.">
+  <title>O Grande Circo do Pedro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="stage-decor" aria-hidden="true"></div>
+  <svg class="action-icon-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18"/></symbol>
+    <symbol id="icon-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v5h4M12 11v6m-3-3 3 3 3-3"/></symbol>
+    <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 18v3h16v-3"/></symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="icon-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="18" cy="19" r="2"/><path d="m8 11 8-5m-8 7 8 5"/></symbol>
+    <symbol id="icon-back" viewBox="0 0 24 24"><path d="m10 5-7 7 7 7M3 12h18"/></symbol>
+  </svg>
+
+  <main class="page">
+    <div class="journey">
+      <div class="guide-sticky" id="pedroGuide" aria-hidden="true">
+        <img src="assets/pedro-animado.webp" alt="" width="1086" height="1448">
+    </div>
+    <section class="scene scene--opening" aria-labelledby="heroTitle">
+      <div class="scene-inner opening-content">
+        <p class="eyebrow">Senhoras e senhores…</p>
+        <h1 class="hero-title" id="heroTitle">
+          <span>O Grande Circo</span>
+          <strong>do Pedro</strong>
+        </h1>
+        <div class="portrait-stage">
+          <img src="assets/pedro-animado.webp" alt="Caricatura do Pedro como mestre de cerimônias do circo" class="portrait" id="portraitImg" width="1086" height="1448">
+        </div>
+        <p class="opening-facts"><time datetime="2026-10-18T16:00">18 OUT <span aria-hidden="true">•</span> 16H</time></p>
+        <div class="scroll-alert" id="scrollAlert" aria-hidden="true">
+          <span>Deslize para continuar</span>
+          <span class="scroll-alert-chevron"></span>
+          <span class="scroll-alert-chevron"></span>
+        </div>
+        <div class="scroll-cue" id="scrollCue" aria-hidden="true">
+          <span class="scroll-cue-chevron"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="scene scene--event" id="evento" aria-labelledby="eventTitle">
+      <div class="scene-inner location-layout">
+        <p class="section-kicker">Próxima parada</p>
+        <div class="location-composition">
+          <div class="date-lockup" aria-label="18 de outubro, às 16h">
+            <strong>18</strong>
+            <span>OUT<br>16H</span>
+          </div>
+          <div class="venue-panel">
+            <h2 id="eventTitle" tabindex="-1">Karamelada Park</h2>
+            <address>Av. Gilenilda Alves, 1080<br>Boa Vista<br>Vitória da Conquista</address>
+            <button type="button" class="map-link" id="eventMapsBtn">Ver no mapa <span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
+        <div class="event-invitation">
+          <p>Um espetáculo muito especial está prestes a começar.</p>
+          <p>Seu ingresso está reservado. Agora só falta confirmar sua presença.</p>
+        </div>
+      </div>
+    </section>
+    </div>
+
+    <section class="scene scene--rsvp" id="rsvp" aria-labelledby="rsvpTitle">
+      <div class="scene-inner">
+        <div class="rsvp-card">
+          <div class="rsvp-mascot" aria-hidden="true">
+            <img src="assets/pedro-animado.webp" alt="" width="1086" height="1448">
+          </div>
+          <div id="rsvpFormWrap">
+            <p class="section-kicker">Seu ingresso está reservado</p>
+            <h2 id="rsvpTitle">Confirme sua presença</h2>
+
+            <form id="rsvpForm" novalidate>
+              <div class="field">
+                <label for="responsavel">Nome do responsável</label>
+                <input type="text" id="responsavel" name="responsavel" placeholder="Digite seu nome" autocomplete="name" required>
+                <p class="field-error" id="responsavelError" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <label for="faixaEtaria">Faixa etária (opcional)</label>
+                <select id="faixaEtaria" name="faixaEtaria">
+                  <option value="">Prefiro não informar</option>
+                  <option value="Até 2 anos">Até 2 anos</option>
+                  <option value="3 a 5 anos">3 a 5 anos</option>
+                  <option value="6 a 10 anos">6 a 10 anos</option>
+                  <option value="11 a 17 anos">11 a 17 anos</option>
+                  <option value="18 anos ou mais">18 anos ou mais</option>
+                </select>
+                <p class="field-error" id="faixaEtariaError" aria-live="polite"></p>
+              </div>
+
+              <div class="field">
+                <span class="field-label" id="guestsLabel">Acompanhantes</span>
+                <div class="counter" role="group" aria-labelledby="guestsLabel">
+                  <button type="button" class="counter-btn" id="decreaseGuestsBtn" aria-label="Diminuir número de acompanhantes">−</button>
+                  <span class="counter-value" id="guestsCount" aria-live="polite">0</span>
+                  <button type="button" class="counter-btn" id="increaseGuestsBtn" aria-label="Aumentar número de acompanhantes">+</button>
+                </div>
+              </div>
+
+              <div class="field field-guest-names" id="guestNamesField" hidden>
+                <label for="guestNames">Nome dos acompanhantes</label>
+                <textarea id="guestNames" name="guestNames" rows="2" placeholder="Ex.: Ana, João e Maria"></textarea>
+              </div>
+
+              <div class="field" id="guestAgesField" hidden>
+                <span class="field-label">Faixa etária dos acompanhantes (opcional)</span>
+                <div id="guestAges"></div>
+                <p class="field-error" id="guestAgesError" aria-live="polite"></p>
+              </div>
+
+              <p class="total-people">Total de pessoas: <span id="totalPeople">1</span></p>
+              <button type="submit" class="btn-main" id="submitRsvpBtn">Confirmar presença</button>
+              <p class="form-status" id="formStatus" role="status" aria-live="assertive"></p>
+            </form>
+          </div>
+
+          <div id="confirmationWrap" hidden>
+            <div class="confetti-field" id="confettiField" aria-hidden="true"></div>
+            <p class="section-kicker">Ingresso garantido</p>
+            <h2 id="confirmationTitle" tabindex="-1">Presença confirmada!</h2>
+            <p class="confirmation-text">Seu ingresso para<br><strong>O Grande Circo do Pedro</strong><br>está garantido.</p>
+            <div class="confirmation-details">
+              <p class="confirmation-when"><time datetime="2026-10-18T16:00">18 DE OUTUBRO <span aria-hidden="true">•</span> 16H</time></p>
+              <h3>Karamelada Park</h3>
+              <address>Av. Gilenilda Alves, 1080<br>Boa Vista • Vitória da Conquista</address>
+            </div>
+            <div class="post-actions">
+              <button type="button" class="confirmation-action confirmation-action--calendar" id="addCalendarBtn" aria-expanded="false" aria-controls="calendarOptions"><svg class="action-icon" aria-hidden="true" focusable="false"><use href="#icon-calendar"/></svg><span class="action-text">Adicionar ao calendário</span><span class="disclosure-chevron" aria-hidden="true">⌄</span></button>
+              <div class="calendar-options" id="calendarOptions" hidden>
+                <button type="button" id="googleCalendarBtn"><svg class="action-icon" aria-hidden="true" focusable="false"><use href="#icon-calendar"/></svg><span class="action-text">Google Agenda</span></button>
+                <button type="button" id="appleCalendarBtn"><svg class="action-icon" aria-hidden="true" focusable="false"><use href="#icon-file"/></svg><span class="action-text">Apple / Outlook</span></button>
+              </div>
+              <button type="button" class="confirmation-action confirmation-action--save" id="saveInfoBtn"><svg class="action-icon" aria-hidden="true" focusable="false"><use href="#icon-download"/></svg><span class="action-text">Salvar informações</span></button>
+              <div class="confirmation-secondary">
+                <button type="button" class="action-link" id="viewLocationBtn"><svg class="action-icon" aria-hidden="true" focusable="false"><use href="#icon-pin"/></svg><span class="action-text">Ver no mapa</span></button>
+                <button type="button" class="action-link" id="shareInviteBtn"><svg class="action-icon" aria-hidden="true" focusable="false"><use href="#icon-share"/></svg><span class="action-text">Compartilhar convite</span></button>
+              </div>
+              <button type="button" class="back-link" id="backToInviteBtn"><svg class="action-icon" aria-hidden="true" focusable="false"><use href="#icon-back"/></svg><span>Voltar ao convite</span></button>
+            </div>
+            <p class="post-action-status" id="postActionStatus" role="status" aria-live="polite"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
