@@ -122,6 +122,9 @@ function bindEvents() {
   els.appleCalendarBtn.addEventListener('click', addToCalendar);
   els.saveInfoBtn.addEventListener('click', saveInfoCard);
   els.shareInviteBtn.addEventListener('click', shareInvite);
+  els.scrollAlert.addEventListener('click', () => {
+    els.eventSection.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+  });
   els.backToInviteBtn.addEventListener('click', () => {
     els.eventSection.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
     els.eventTitle.focus({ preventScroll: true });

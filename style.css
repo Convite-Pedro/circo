@@ -199,7 +199,14 @@ img { display: block; max-width: 100%; }
   align-items: center;
   gap: 5px;
   margin-top: clamp(16px, 3svh, 30px);
+  min-width: 48px;
+  min-height: 48px;
+  padding: 6px 10px;
+  border: 0;
+  background: transparent;
   color: var(--cream);
+  cursor: pointer;
+  font: inherit;
   font-size: .7rem;
   font-weight: 700;
   letter-spacing: .16em;
@@ -211,6 +218,10 @@ img { display: block; max-width: 100%; }
   transition: opacity .35s ease, visibility .35s ease;
 }
 .scroll-alert.is-visible { opacity: 1; visibility: visible; }
+.scroll-alert:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
+}
 .scroll-alert-chevron,
 .scroll-cue-chevron {
   display: block;
@@ -221,8 +232,7 @@ img { display: block; max-width: 100%; }
   transform: rotate(45deg);
 }
 .scroll-alert-chevron + .scroll-alert-chevron { margin-top: -8px; }
-.scroll-alert.is-visible .scroll-alert-chevron { animation: alert-chevron 1.8s ease-in-out both; }
-.scroll-alert.is-visible .scroll-alert-chevron + .scroll-alert-chevron { animation-delay: .1s; }
+.scroll-alert.is-visible { animation: continuePulse 1.2s ease-in-out infinite; }
 .scroll-cue {
   display: inline-flex;
   flex-direction: column;
@@ -620,6 +630,10 @@ img { display: block; max-width: 100%; }
 @keyframes alert-chevron {
   0%, 45%, 100% { translate: 0 0; opacity: .72; }
   70% { translate: 0 5px; opacity: 1; }
+}
+@keyframes continuePulse {
+  0%, 100% { opacity: .4; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(6px); }
 }
 @keyframes bottom-cue {
   0%, 72%, 100% { translate: 0 0; opacity: .65; }
