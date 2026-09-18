@@ -428,6 +428,15 @@ img { display: block; max-width: 100%; }
   font-size: clamp(1.85rem, 7vw, 2.6rem);
   line-height: 1.12;
 }
+.individual-invite-note {
+  display: grid;
+  gap: 3px;
+  margin: -10px 0 22px;
+  color: #4b5560;
+  font-size: .86rem;
+  line-height: 1.45;
+}
+.individual-invite-note strong { color: var(--blue-deep); font-size: .9rem; }
 .field { margin-bottom: 20px; }
 .field label, .field-label {
   display: block;

@@ -15,9 +15,12 @@ const EVENT = {
 };
 
 const MAX_GUESTS = 10;
+const params = new URLSearchParams(window.location.search);
+const conviteIndividual = params.get('convite') === 'individual';
 
 document.addEventListener('DOMContentLoaded', () => {
   cacheElements();
+  applyInviteMode();
   bindEvents();
   handlePortraitFallback();
   initSceneMotion();
@@ -53,6 +56,8 @@ function cacheElements() {
     decreaseGuestsBtn: document.getElementById('decreaseGuestsBtn'),
     increaseGuestsBtn: document.getElementById('increaseGuestsBtn'),
     guestsCountEl: document.getElementById('guestsCount'),
+    guestsCounterField: document.getElementById('decreaseGuestsBtn')?.closest('.field'),
+    individualInviteNote: document.getElementById('individualInviteNote'),
 
     guestNamesField: document.getElementById('guestNamesField'),
     guestNamesInput: document.getElementById('guestNames'),
@@ -79,6 +84,19 @@ function cacheElements() {
 
     portraitImg: document.getElementById('portraitImg'),
   };
+}
+
+function applyInviteMode() {
+  if (!conviteIndividual) return;
+
+  guestsCount = 0;
+  els.guestsCounterField.hidden = true;
+  els.guestNamesField.hidden = true;
+  els.guestAgesField.hidden = true;
+  els.guestNamesInput.value = '';
+  els.guestAges.replaceChildren();
+  els.individualInviteNote.hidden = false;
+  els.totalPeopleEl.textContent = '1';
 }
 
 let guestsCount = 0;
@@ -212,6 +230,7 @@ function initPedroGuide() {
    -------------------------------------------------------------------------- */
 
 function updateGuestCounter(delta) {
+  if (conviteIndividual) return;
   const next = guestsCount + delta;
   if (next < 0 || next > MAX_GUESTS) return;
 
@@ -297,13 +316,13 @@ async function submitRSVP(event) {
   setSubmittingState(true);
 
   const responsavel = els.responsavelInput.value.trim();
-  const acompanhantes = guestsCount;
-  const nomesAcompanhantes = els.guestNamesInput.value.trim();
+  const acompanhantes = conviteIndividual ? 0 : guestsCount;
+  const nomesAcompanhantes = conviteIndividual ? '' : els.guestNamesInput.value.trim();
   const faixaEtaria = els.faixaEtariaInput.value;
   const guestAgeValues = Array.from(els.guestAges.querySelectorAll('select'),
     (select) => select.value);
-  const faixasEtariasAcompanhantes = guestAgeValues.some(Boolean) ? guestAgeValues.join(' | ') : '';
-  const total = acompanhantes + 1;
+  const faixasEtariasAcompanhantes = conviteIndividual ? '' : (guestAgeValues.some(Boolean) ? guestAgeValues.join(' | ') : '');
+  const total = conviteIndividual ? 1 : acompanhantes + 1;
 
   const payload = {
     responsavel,
