@@ -72,6 +72,9 @@ img { display: block; max-width: 100%; }
   transition: opacity .45s ease, transform .65s ease;
 }
 .guide-sticky.is-active { opacity: .9; transform: translate(0, 0) scale(.78); }
+.guide-sticky.pedro-state-hero,
+.guide-sticky.pedro-state-rsvp,
+.guide-sticky.pedro-state-confirmation { opacity: 0; }
 .guide-sticky.pedro-state-location { transform: translate(0, 0) scale(.78); }
 .guide-sticky.pedro-state-details { transform: translate(-2px, 2px) scale(.7); }
 .guide-sticky img {
