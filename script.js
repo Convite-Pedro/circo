@@ -37,8 +37,10 @@ let els = {};
 
 function cacheElements() {
   els = {
+    openingSection: document.getElementById('abertura'),
     rsvpSection: document.getElementById('rsvp'),
     eventSection: document.getElementById('evento'),
+    eventInvitation: document.querySelector('.event-invitation'),
     eventTitle: document.getElementById('eventTitle'),
     eventMapsBtn: document.getElementById('eventMapsBtn'),
     pedroGuide: document.getElementById('pedroGuide'),
@@ -173,59 +175,64 @@ function initSceneMotion() {
 }
 
 function initScrollCue() {
-  const timers = [];
-  let alreadyScrolled = window.scrollY > 4;
-  try { alreadyScrolled ||= sessionStorage.getItem('pedroHasScrolled') === '1'; } catch (_) { /* armazenamento indisponível */ }
+  els.scrollAlert.classList.add('is-visible');
 
-  const hideCue = () => {
-    if (window.scrollY <= 4) return;
-    document.body.classList.add('has-scrolled');
-    els.scrollAlert.classList.remove('is-visible');
-    timers.forEach(clearTimeout);
-    window.removeEventListener('scroll', hideCue);
-    try { sessionStorage.setItem('pedroHasScrolled', '1'); } catch (_) { /* armazenamento indisponível */ }
-  };
+  if (!('IntersectionObserver' in window)) return;
 
-  if (alreadyScrolled) {
-    document.body.classList.add('has-scrolled');
-    return;
-  }
+  const cueObserver = new IntersectionObserver(([entry]) => {
+    const openingIsVisible = entry.isIntersecting && entry.intersectionRatio >= .35;
+    els.scrollAlert.classList.toggle('is-visible', openingIsVisible);
+    document.body.classList.toggle('has-scrolled', !openingIsVisible);
+  }, { threshold: [0, .35] });
 
-  window.addEventListener('scroll', hideCue, { passive: true });
-  timers.push(setTimeout(() => els.scrollAlert.classList.add('is-visible'), 1000));
-  timers.push(setTimeout(() => els.scrollAlert.classList.remove('is-visible'), 3000));
-  timers.push(setTimeout(() => els.scrollAlert.classList.add('is-visible'), 5300));
-  timers.push(setTimeout(() => els.scrollAlert.classList.remove('is-visible'), 7300));
+  cueObserver.observe(els.openingSection);
 }
 
 function initPedroGuide() {
-  if (!('IntersectionObserver' in window)) return;
+  if (!('IntersectionObserver' in window)) {
+    setPedroState('rsvp');
+    return;
+  }
 
-  let openingPortraitInView = true;
-  let eventInView = false;
-  let rsvpInView = false;
-  const updateGuide = () => {
-    els.pedroGuide.classList.toggle('is-active', !openingPortraitInView && eventInView && !rsvpInView);
+  const targets = [
+    { element: els.openingSection, state: 'hero' },
+    { element: els.eventSection, state: 'location' },
+    { element: els.eventInvitation, state: 'details' },
+    { element: els.rsvpSection, state: 'rsvp' },
+  ];
+  const visibility = new Map(targets.map(({ state }) => [state, 0]));
+  const updateState = () => {
+    let activeState = 'hero';
+    let highestRatio = 0;
+    visibility.forEach((ratio, state) => {
+      if (ratio > highestRatio) {
+        highestRatio = ratio;
+        activeState = state;
+      }
+    });
+    if (activeState !== 'hero' && visibility.get('hero') > 0) activeState = 'hero';
+    if (!els.confirmationWrap.hidden && visibility.get('rsvp') > 0) activeState = 'confirmation';
+    setPedroState(activeState);
   };
 
-  const portraitObserver = new IntersectionObserver(([entry]) => {
-    openingPortraitInView = entry.isIntersecting;
-    updateGuide();
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const target = targets.find(({ element }) => element === entry.target);
+      if (target) visibility.set(target.state, entry.isIntersecting ? entry.intersectionRatio : 0);
+    });
+    updateState();
+  }, { threshold: [0, .25, .5, .75], rootMargin: '-12% 0px -20% 0px' });
+
+  targets.forEach(({ element }) => observer.observe(element));
+}
+
+function setPedroState(state) {
+  const stateClasses = ['hero', 'location', 'details', 'rsvp', 'confirmation'];
+  stateClasses.forEach((name) => {
+    els.pedroGuide.classList.toggle(`pedro-state-${name}`, state === name);
+    els.rsvpSection.classList.toggle(`pedro-state-${name}`, state === name);
   });
-
-  const eventObserver = new IntersectionObserver(([entry]) => {
-    eventInView = entry.isIntersecting;
-    updateGuide();
-  }, { rootMargin: '0px 0px -50% 0px' });
-
-  const rsvpObserver = new IntersectionObserver(([entry]) => {
-    rsvpInView = entry.isIntersecting;
-    updateGuide();
-  }, { rootMargin: '0px 0px -5% 0px' });
-
-  portraitObserver.observe(els.portraitImg);
-  eventObserver.observe(els.eventSection);
-  rsvpObserver.observe(els.rsvpSection);
+  els.pedroGuide.classList.toggle('is-active', state === 'location' || state === 'details');
 }
 
 /* --------------------------------------------------------------------------
@@ -383,6 +390,7 @@ function showConfirmation() {
   els.rsvpFormWrap.hidden = true;
   els.confirmationWrap.hidden = false;
   els.rsvpSection.setAttribute('aria-labelledby', 'confirmationTitle');
+  setPedroState('confirmation');
   els.formStatus.textContent = '';
 
   window.requestAnimationFrame(() => {
