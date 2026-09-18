@@ -19,6 +19,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   min-width: 320px;
+  touch-action: pan-y;
   overflow-x: hidden;
   background: var(--blue-deep);
   color: var(--cream);
@@ -59,6 +60,7 @@ img { display: block; max-width: 100%; }
 }
 
 .page { position: relative; isolation: isolate; }
+.page { touch-action: pan-y; }
 .journey { position: relative; }
 .guide-sticky {
   position: sticky;
@@ -661,8 +663,24 @@ img { display: block; max-width: 100%; }
 @keyframes confetti-fall { 0% { opacity: 0; transform: translateY(0) rotate(0); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(90px) rotate(200deg); } }
 
 @media (max-width: 767px) {
+  html,
+  body,
+  .page,
+  .journey {
+    scroll-snap-type: none !important;
+  }
+
+  .scene,
+  section,
+  [data-section] {
+    scroll-snap-align: none !important;
+    scroll-snap-stop: normal !important;
+  }
+}
+
+@media (min-width: 768px) {
   html { scroll-snap-type: y proximity; }
-  .scene { scroll-snap-align: start; }
+  .scene { scroll-snap-align: start; scroll-snap-stop: normal; }
 }
 
 @media (max-width: 600px) {
